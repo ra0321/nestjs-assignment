@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CatsModule } from './cats/cats.module';
 
+import { UserEntity } from 'src/users/user.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -19,6 +21,7 @@ import { CatsModule } from './cats/cats.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
+        entities: [UserEntity],
         synchronize: true,
       }),
     }),

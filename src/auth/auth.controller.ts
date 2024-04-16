@@ -11,7 +11,9 @@ import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/UserLoginDto';
+import { UserRegisterDto } from './dto/UserRegisterDto';
 import { LoginResponseDto } from './dto/LoginResponseDto';
+import { RegisterResponseDto } from './dto/RegisterResponseDto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -33,5 +35,22 @@ export class AuthController {
     @Body() userLoginDto: UserLoginDto,
   ): Promise<LoginResponseDto> {
     return this.authService.login(userLoginDto);
+  }
+
+  @Post('register')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Register',
+    description: '',
+  })
+  @ApiOkResponse({
+    type: RegisterResponseDto,
+  })
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 6, ttl: 60 } })
+  async userRegister(
+    @Body() userRegisterDto: UserRegisterDto,
+  ): Promise<RegisterResponseDto> {
+    return this.authService.register(userRegisterDto);
   }
 }
