@@ -1,10 +1,12 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CatEntity } from './cat.entity';
 import type { CatCreateRequestDto } from './dto/CatCreateRequestDto';
+import type { CatUpdateRequestDto } from './dto/CatUpdateRequestDto';
 import { CatCreateResponseDto } from './dto/CatCreateResponseDto';
+import { CatUpdateResponseDto } from './dto/CatUpdateResponseDto';
 import { CatDto } from './dto/CatDto';
 
 @Injectable()
@@ -35,5 +37,17 @@ export class CatsService {
     const entity = await this.catsRepository.findOne({ where: { id }});
     
     return entity?.toDto();
+  }
+
+  async update(id: number, data: CatUpdateRequestDto): Promise<CatUpdateResponseDto> {
+    const entity = await this.findOne(id);
+
+    if (!entity) throw new NotFoundException();
+
+    await this.catsRepository.update(id, data);
+
+    const cat = await this.findOne(id);
+
+    return new CatUpdateResponseDto({ cat })
   }
 }
