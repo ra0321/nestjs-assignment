@@ -1,15 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { Cat } from './interfaces/cat.interface';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { CatEntity } from './cat.entity';
+import type { CatCreateRequestDto } from './dto/CatCreateRequestDto';
+import { CatCreateResponseDto } from './dto/CatCreateResponseDto';
 
 @Injectable()
 export class CatsService {
-  private readonly cats: Cat[] = [];
+  constructor(
+    @InjectRepository(CatEntity)
+    public catsRepository: Repository<CatEntity>,
+  ) {}
 
-  create(cat: Cat) {
-    this.cats.push(cat);
+  async create(data: CatCreateRequestDto): Promise<CatCreateResponseDto> {
+    try {
+      const cat = await this.catsRepository.create(data);
+      const entity = await this.catsRepository.save(cat);
+
+      return new CatCreateResponseDto({ cat: entity.toDto() });
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
-  findAll(): Cat[] {
-    return this.cats;
-  }
+  // findAll(): Cat[] {
+  //   return this.cats;
+  // }
 }
