@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CatEntity } from './cat.entity';
 import type { CatCreateRequestDto } from './dto/CatCreateRequestDto';
 import { CatCreateResponseDto } from './dto/CatCreateResponseDto';
+import { CatDto } from './dto/CatDto';
 
 @Injectable()
 export class CatsService {
@@ -24,7 +25,15 @@ export class CatsService {
     }
   }
 
-  // findAll(): Cat[] {
-  //   return this.cats;
-  // }
+  async findAll(): Promise<CatDto[]> {
+    const list = await this.catsRepository.find({ order: { id: 'ASC' } });
+
+    return list.map((item) => item.toDto());
+  }
+
+  async findOne(id: number): Promise<CatDto> {
+    const entity = await this.catsRepository.findOne({ where: { id }});
+    
+    return entity?.toDto();
+  }
 }
