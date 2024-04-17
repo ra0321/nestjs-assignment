@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { CatsController } from './cats.controller';
-import { CatDto } from './dto/CatDto';
 import { CatEntity } from './cat.entity';
 import { CatsService } from './cats.service';
 
