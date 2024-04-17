@@ -57,7 +57,7 @@ export class CatsController {
     type: CatDto,
     isArray: true
   })
-  async getList(): Promise<CatDto[]> {
+  async findAll(): Promise<CatDto[]> {
     return this.catsService.findAll();
   }
 
@@ -70,11 +70,11 @@ export class CatsController {
   @ApiOkResponse({
     type: CatGetResponseDto
   })
-  async getOne(
+  async findOneById(
     @Param('id', new ParseIntPipe())
     id: number,
   ): Promise<CatGetResponseDto> {
-    const cat = await this.catsService.findOne(id);
+    const cat = await this.catsService.findOneById(id);
 
     return new CatGetResponseDto({ cat });
   }
@@ -102,8 +102,8 @@ export class CatsController {
     summary: 'Delete',
     description: 'Delete a cat profile.',
   })
-  async remove(
+  async delete(
     @Param('id', new ParseIntPipe()) id: number): Promise<void> {
-    return this.catsService.remove(id);
+    return this.catsService.delete(id);
   }
 }

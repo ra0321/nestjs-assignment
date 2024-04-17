@@ -33,21 +33,21 @@ export class CatsService {
     return list.map((item) => item.toDto());
   }
 
-  async findOne(id: number): Promise<CatDto> {
+  async findOneById(id: number): Promise<CatDto> {
     const entity = await this.catsRepository.findOne({ where: { id }});
     
     return entity?.toDto();
   }
 
   async update(id: number, data: CatUpdateRequestDto): Promise<CatUpdateResponseDto> {
-    const entity = await this.findOne(id);
+    const entity = await this.findOneById(id);
 
     if (!entity) throw new NotFoundException();
 
     try {
       await this.catsRepository.update(id, data);
 
-      const cat = await this.findOne(id);
+      const cat = await this.findOneById(id);
 
       return new CatUpdateResponseDto({ cat });
     } catch {
@@ -55,8 +55,8 @@ export class CatsService {
     }
   }
 
-  async remove(id: number): Promise<void> {
-    const entity = await this.findOne(id);
+  async delete(id: number): Promise<void> {
+    const entity = await this.findOneById(id);
 
     if (!entity) throw new NotFoundException();
 
