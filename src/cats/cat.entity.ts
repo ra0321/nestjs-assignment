@@ -1,4 +1,4 @@
-import { AbstractEntity } from 'src/common/abstract.entity';
+import { AbstractEntity } from '../common/abstract.entity';
 import {
   Entity,
   Column,
@@ -18,4 +18,12 @@ export class CatEntity extends AbstractEntity<CatDto> {
   breed: string;
 
   dtoClass = CatDto;
+
+  constructor(data: { name?: string, age?: number, breed?: string}) {
+    super();
+
+    this.name = data?.name || '';
+    this.age = data?.age || NaN;
+    this.breed = data?.breed || '';
+  }
 }

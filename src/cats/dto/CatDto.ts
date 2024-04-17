@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
 
-import { AbstractDto } from 'src/common/dto/AbstractDto';
+import { AbstractDto } from '../../common/dto/AbstractDto';
 
 import type { CatEntity } from '../cat.entity';
 

@@ -55,7 +55,7 @@ export class CatsService {
     }
   }
 
-  async delete(id: number): Promise<{ deleted: boolean; message?: string }> {
+  async delete(id: number): Promise<{ deleted: boolean, message?: string }> {
     const entity = await this.findOneById(id);
 
     if (!entity) throw new NotFoundException();
