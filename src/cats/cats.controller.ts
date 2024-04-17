@@ -129,7 +129,7 @@ export class CatsController {
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   async delete(
-    @Param('id', new ParseIntPipe()) id: number): Promise<void> {
+    @Param('id', new ParseIntPipe()) id: number): Promise<{ deleted: boolean }> {
     return this.catsService.delete(id);
   }
 }

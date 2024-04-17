@@ -55,7 +55,7 @@ export class CatsService {
     }
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<{ deleted: boolean; message?: string }> {
     const entity = await this.findOneById(id);
 
     if (!entity) throw new NotFoundException();
@@ -63,9 +63,9 @@ export class CatsService {
     try {
       await this.catsRepository.delete(id);
       
-      return;
-    } catch {
-      throw new InternalServerErrorException();
+      return { deleted: true };
+    } catch (err) {
+      return { deleted: false, message: err.message };
     }
   }
 }
