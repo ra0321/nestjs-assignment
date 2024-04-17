@@ -44,10 +44,28 @@ export class CatsService {
 
     if (!entity) throw new NotFoundException();
 
-    await this.catsRepository.update(id, data);
+    try {
+      await this.catsRepository.update(id, data);
 
-    const cat = await this.findOne(id);
+      const cat = await this.findOne(id);
 
-    return new CatUpdateResponseDto({ cat })
+      return new CatUpdateResponseDto({ cat });
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async remove(id: number): Promise<void> {
+    const entity = await this.findOne(id);
+
+    if (!entity) throw new NotFoundException();
+
+    try {
+      await this.catsRepository.delete(id);
+      
+      return;
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 }

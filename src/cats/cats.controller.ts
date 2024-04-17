@@ -84,7 +84,7 @@ export class CatsController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Update',
-    description: 'Update a new cat profile.',
+    description: 'Update a cat profile.',
   })
   @ApiOkResponse({
     type: CatUpdateResponseDto,
@@ -93,5 +93,17 @@ export class CatsController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() catUpdateRequestDto: CatUpdateRequestDto): Promise<CatUpdateResponseDto> {
     return this.catsService.update(id, catUpdateRequestDto);
+  }
+
+  @Delete(':id')
+  @Roles(UserRole.Admin)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Delete',
+    description: 'Delete a cat profile.',
+  })
+  async remove(
+    @Param('id', new ParseIntPipe()) id: number): Promise<void> {
+    return this.catsService.remove(id);
   }
 }
