@@ -10,7 +10,15 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse
+} from '@nestjs/swagger';
 
 import { UserRole } from '../common/constants/user-roles';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -36,6 +44,9 @@ export class CatsController {
   @Post()
   @Roles(UserRole.Admin)
   @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.UNAUTHORIZED)
+  @HttpCode(HttpStatus.FORBIDDEN)
+  @HttpCode(HttpStatus.INTERNAL_SERVER_ERROR)
   @ApiOperation({
     summary: 'Create',
     description: 'Create a new cat profile.',
@@ -43,12 +54,16 @@ export class CatsController {
   @ApiOkResponse({
     type: CatCreateResponseDto,
   })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
   async create(@Body() catCreateRequestDto: CatCreateRequestDto): Promise<CatCreateResponseDto> {
     return this.catsService.create(catCreateRequestDto);
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.UNAUTHORIZED)
   @ApiOperation({
     summary: 'List',
     description: 'Retrieve a list of all cats.',
@@ -57,12 +72,14 @@ export class CatsController {
     type: CatDto,
     isArray: true
   })
+  @ApiUnauthorizedResponse()
   async findAll(): Promise<CatDto[]> {
     return this.catsService.findAll();
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.UNAUTHORIZED)
   @ApiOperation({
     summary: 'Get',
     description: 'Get a cat profile.',
@@ -70,6 +87,7 @@ export class CatsController {
   @ApiOkResponse({
     type: CatGetResponseDto
   })
+  @ApiUnauthorizedResponse()
   async findOneById(
     @Param('id', new ParseIntPipe())
     id: number,
@@ -82,6 +100,8 @@ export class CatsController {
   @Put(':id')
   @Roles(UserRole.Admin)
   @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.UNAUTHORIZED)
+  @HttpCode(HttpStatus.FORBIDDEN)
   @ApiOperation({
     summary: 'Update',
     description: 'Update a cat profile.',
@@ -89,6 +109,8 @@ export class CatsController {
   @ApiOkResponse({
     type: CatUpdateResponseDto,
   })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
   async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() catUpdateRequestDto: CatUpdateRequestDto): Promise<CatUpdateResponseDto> {
@@ -98,10 +120,14 @@ export class CatsController {
   @Delete(':id')
   @Roles(UserRole.Admin)
   @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.UNAUTHORIZED)
+  @HttpCode(HttpStatus.FORBIDDEN)
   @ApiOperation({
     summary: 'Delete',
     description: 'Delete a cat profile.',
   })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
   async delete(
     @Param('id', new ParseIntPipe()) id: number): Promise<void> {
     return this.catsService.delete(id);
