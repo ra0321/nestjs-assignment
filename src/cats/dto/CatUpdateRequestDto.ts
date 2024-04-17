@@ -14,4 +14,10 @@ export class CatUpdateRequestDto {
   @IsString()
   @ApiPropertyOptional()
   readonly breed?: string;
+
+  constructor(data: { name?: string, age?: number, breed?: string}) {
+    this.name = data?.name || '';
+    this.age = data?.age || NaN;
+    this.breed = data?.breed || '';
+  }
 }

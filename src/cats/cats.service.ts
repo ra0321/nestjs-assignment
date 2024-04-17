@@ -18,7 +18,7 @@ export class CatsService {
 
   async create(data: CatCreateRequestDto): Promise<CatCreateResponseDto> {
     try {
-      const cat = await this.catsRepository.create(data);
+      const cat = this.catsRepository.create(data);
       const entity = await this.catsRepository.save(cat);
 
       return new CatCreateResponseDto({ cat: entity.toDto() });
@@ -40,10 +40,6 @@ export class CatsService {
   }
 
   async update(id: number, data: CatUpdateRequestDto): Promise<CatUpdateResponseDto> {
-    const entity = await this.findOneById(id);
-
-    if (!entity) throw new NotFoundException();
-
     try {
       await this.catsRepository.update(id, data);
 
@@ -56,10 +52,6 @@ export class CatsService {
   }
 
   async delete(id: number): Promise<{ deleted: boolean, message?: string }> {
-    const entity = await this.findOneById(id);
-
-    if (!entity) throw new NotFoundException();
-
     try {
       await this.catsRepository.delete(id);
       
