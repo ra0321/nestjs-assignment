@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { UserRole } from 'src/common/constants/user-roles';
+import { UserRole } from '../../common/constants/user-roles';
 
 export class UserRegisterDto {
   @IsString()

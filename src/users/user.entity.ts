@@ -1,10 +1,10 @@
-import { AbstractEntity } from 'src/common/abstract.entity';
+import { AbstractEntity } from '../common/abstract.entity';
 import {
   Entity,
   Column,
 } from 'typeorm';
 
-import { UserRole } from 'src/common/constants/user-roles';
+import { UserRole } from '../common/constants/user-roles';
 import { UserDto } from './dto/UserDto';
 
 @Entity({ name: 'users' })

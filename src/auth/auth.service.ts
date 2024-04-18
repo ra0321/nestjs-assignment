@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import type { UserEntity } from 'src/users/user.entity';
-import { UtilsService } from 'src/common/providers/utils.service';
+import type { UserEntity } from '../users/user.entity';
+import { UtilsService } from '../common/providers/utils.service';
 
 import { UsersService } from '../users/users.service';
 import type { UserLoginDto } from './dto/UserLoginDto';
@@ -11,7 +11,7 @@ import { LoginResponseDto } from './dto/LoginResponseDto';
 import { RegisterResponseDto } from './dto/RegisterResponseDto';
 import { TokenResponseDto } from './dto/TokenResponseDto';
 
-import { UserAlreadyExistException } from 'src/common/exceptions/UserAlreadyExistException';
+import { UserAlreadyExistException } from '../common/exceptions/UserAlreadyExistException';
 
 @Injectable()
 export class AuthService {
