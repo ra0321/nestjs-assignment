@@ -1,12 +1,33 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Tundrax application**
 
 ## Installation
 
 ```bash
 $ npm install
+```
+Install PostgreSQL and then create 2 databases. (For example, **tundrax** and **tundrax_test**)
+
+## Config environment
+
+```bash
+$ cp .env.example .env
+```
+### Update .env
+```bash
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+DB_DATABASE=your_database # tundrax
+DB_TEST_DATABASE=your_test_database # tundrax_test
+
+# Auth
+JWT_SECRET_KEY=your_test_key # ex: tundrax
+JWT_EXPIRATION_TIME=your_test_time # ex: 3600000
 ```
 
 ## Running the app
@@ -35,6 +56,6 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Technologies Used
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+[Nest](https://nestjs.com/), [Passport-jwt](https://www.passportjs.org/packages/passport-jwt/), [PstgreSQL](https://www.postgresql.org/), [NodeJS](https://nodejs.org/), [TypeORM](https://typeorm.io/), [Jest](https://jestjs.io/), E2E Testing, Unit Testing
