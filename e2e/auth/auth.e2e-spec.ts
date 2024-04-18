@@ -9,7 +9,6 @@ import { AuthModule } from '../../src/auth/auth.module';
 
 import { UserEntity } from '../../src/users/user.entity';
 import { CatEntity } from '../../src/cats/cat.entity';
-import exp from 'constants';
 
 describe('Auth', () => {
   let app: INestApplication;
