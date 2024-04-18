@@ -33,16 +33,17 @@ import { CatUpdateResponseDto } from './dto/CatUpdateResponseDto';
 import { CatGetResponseDto } from './dto/CatGetResponseDto';
 import { CatDto } from './dto/CatDto';
 
-
+// Controller handling all routes related to cats, secured with authentication and role-based guards.
 @Controller('cats')
-@ApiTags('cats')
-@UseGuards(AuthGuard, RolesGuard)
-@ApiBearerAuth()
+@ApiTags('cats') // Tag used for API documentation grouping.
+@UseGuards(AuthGuard, RolesGuard) // Applies Guards that check for authentication and role authorization.
+@ApiBearerAuth() // Indicates that methods in this controller use Bearer Token authentication.
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
+  // Method to create a new cat profile.
   @Post()
-  @Roles(UserRole.Admin)
+  @Roles(UserRole.Admin) // Restricts access to Admin users only.
   @HttpCode(HttpStatus.OK)
   @HttpCode(HttpStatus.UNAUTHORIZED)
   @HttpCode(HttpStatus.FORBIDDEN)
@@ -61,6 +62,7 @@ export class CatsController {
     return this.catsService.create(catCreateRequestDto);
   }
 
+  // Method to retrieve all cat profiles.
   @Get()
   @HttpCode(HttpStatus.OK)
   @HttpCode(HttpStatus.UNAUTHORIZED)
@@ -77,6 +79,7 @@ export class CatsController {
     return this.catsService.findAll();
   }
 
+  // Method to retrieve a specific cat profile by ID.
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @HttpCode(HttpStatus.UNAUTHORIZED)
@@ -97,6 +100,7 @@ export class CatsController {
     return new CatGetResponseDto({ cat });
   }
 
+  // Method to update a cat profile by ID.
   @Put(':id')
   @Roles(UserRole.Admin)
   @HttpCode(HttpStatus.OK)
@@ -117,6 +121,7 @@ export class CatsController {
     return this.catsService.update(id, catUpdateRequestDto);
   }
 
+  // Method to delete a cat profile by ID.
   @Delete(':id')
   @Roles(UserRole.Admin)
   @HttpCode(HttpStatus.OK)

@@ -15,12 +15,25 @@ import { UserAlreadyExistException } from '../common/exceptions/UserAlreadyExist
 
 @Injectable()
 export class AuthService {
+  /**
+   * Constructs the authentication service with necessary dependencies.
+   * 
+   * @param jwtService Service for handling JWT operations such as signing tokens.
+   * @param configService Service to access application configurations like JWT expiration.
+   * @param usersService Service to handle database operations related to users.
+   */
   constructor(
     public readonly jwtService: JwtService,
     public readonly configService: ConfigService,
     public readonly usersService: UsersService,
   ) {}
 
+  /**
+   * Creates a JWT token for a user.
+   * 
+   * @param user An object containing the user ID.
+   * @returns A promise that resolves to a TokenResponseDto.
+   */
   async createToken(user: { id: number }): Promise<TokenResponseDto> {
     return new TokenResponseDto({
       expiresIn: this.configService.get<number>('JWT_EXPIRATION_TIME'),
@@ -30,6 +43,13 @@ export class AuthService {
     });
   }
 
+  /**
+   * Validates a user's email and password.
+   * 
+   * @param data An object containing email and password.
+   * @throws UnauthorizedException If no user is found or the password is invalid.
+   * @returns A promise that resolves to the user entity.
+   */
   async validateUser(data: {
     email: string;
     password: string;
@@ -54,6 +74,12 @@ export class AuthService {
     return user;
   }
 
+  /**
+   * Checks if a user exists in the database based on email.
+   * 
+   * @param data An object containing the user's email.
+   * @returns A promise that resolves to a boolean indicating if the user exists.
+   */
   async checkUserExist(data: {
     email: string;
   }): Promise<boolean> {
@@ -68,6 +94,13 @@ export class AuthService {
     return true;
   }
 
+  /**
+   * Handles the login process for a user.
+   * 
+   * @param userLoginDto Data Transfer Object containing login information.
+   * @throws UnauthorizedException If authentication fails.
+   * @returns A promise that resolves to a LoginResponseDto.
+   */
   async login(userLoginDto: UserLoginDto): Promise<LoginResponseDto> {
     const userEntity = await this.validateUser(userLoginDto);
 
@@ -80,6 +113,14 @@ export class AuthService {
     }
   }
 
+  /**
+   * Handles the registration of a new user.
+   * 
+   * @param userRegisterDto Data Transfer Object containing registration information.
+   * @throws UserAlreadyExistException If the email is already in use.
+   * @throws InternalServerErrorException If there is a database error.
+   * @returns A promise that resolves to a RegisterResponseDto.
+   */
   async register(userRegisterDto: UserRegisterDto): Promise<RegisterResponseDto> {
     const userExist = await this.checkUserExist(userRegisterDto);
 
