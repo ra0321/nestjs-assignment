@@ -8,7 +8,7 @@
 ```bash
 $ npm install
 ```
-Install PostgreSQL and then create 2 databases. (For example, **tundrax** and **tundrax_test**)
+Then install PostgreSQL and then create 2 databases. (For example, **tundrax** and **tundrax_test**)
 
 ## Config environment
 
@@ -58,4 +58,4 @@ $ npm run test:cov
 
 ## Technologies Used
 
-[Nest](https://nestjs.com/), [Passport-jwt](https://www.passportjs.org/packages/passport-jwt/), [PstgreSQL](https://www.postgresql.org/), [NodeJS](https://nodejs.org/), [TypeORM](https://typeorm.io/), [Jest](https://jestjs.io/), E2E Testing, Unit Testing
+[Nest](https://nestjs.com/), [Passport-jwt](https://www.passportjs.org/packages/passport-jwt/), [PostgreSQL](https://www.postgresql.org/), [NodeJS](https://nodejs.org/), [TypeORM](https://typeorm.io/), [Jest](https://jestjs.io/), E2E Testing, Unit Testing
