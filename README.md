@@ -1,14 +1,14 @@
 
 ## Description
 
-**Tundrax application**
+**ra application**
 
 ## Installation
 
 ```bash
 $ npm install
 ```
-Then install PostgreSQL and then create 2 databases. (For example, **tundrax** and **tundrax_test**)
+Then install PostgreSQL and then create 2 databases. (For example, **ra_app** and **ra_app_test**)
 
 ## Config environment
 
@@ -22,11 +22,11 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
-DB_DATABASE=your_database # tundrax
-DB_TEST_DATABASE=your_test_database # tundrax_test
+DB_DATABASE=your_database # ra_app
+DB_TEST_DATABASE=your_test_database # ra_app_test
 
 # Auth
-JWT_SECRET_KEY=your_test_key # ex: tundrax
+JWT_SECRET_KEY=your_test_key # ex: ra
 JWT_EXPIRATION_TIME=your_test_time # ex: 3600000
 ```
 
